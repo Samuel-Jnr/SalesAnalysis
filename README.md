@@ -40,3 +40,120 @@ SQL – SELECT, WHERE, UNION ALL, DATENAME, CTEs, HAVING
    RECOMMENDATION
    
    Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
+
+2. Customers who have made more than two purchases
+   ``` sql
+   WITH AllCustomers AS (
+    SELECT 
+        BusinessEntityID,
+        CONCAT(FirstName, ' ',
+               ISNULL(MiddleName, ''), ' ',
+               LastName) AS CustomerName
+    FROM Person.Person
+
+    UNION ALL
+
+    SELECT 
+        BusinessEntityID,
+        Name AS CustomerName
+    FROM Sales.Store
+   )
+   SELECT
+    soh.CustomerID,
+	ac.CustomerName,
+	COUNT(soh.SalesOrderID) AS TotalOrders,
+    MAX(soh.OrderDate) AS FirstPurchase,
+	MIN(soh.OrderDate) AS LastPurchase
+   FROM Sales.SalesOrderHeader AS soh
+   LEFT JOIN AllCustomers AS ac
+    ON soh.CustomerID = ac.BusinessEntityID
+   WHERE soh.OrderDate >= DATEADD(YEAR, -1, 2014) AND ac.CustomerName IS NOT NULL
+   GROUP BY soh.customerID, ac.CustomerName
+   HAVING COUNT(DISTINCT soh.SalesOrderID) > 1
+   ORDER BY TotalOrders DESC;
+   ```
+
+   RECOMENDATION
+
+   xxx
+
+3. Sales Volume and Revenue Pattern
+    ``` sql
+    SELECT 
+	YEAR(soh.OrderDate) AS Yr,
+	MONTH(soh.OrderDate) AS Mth,
+	SUM(sod.OrderQty) AS TotalOrder,
+	SUM(soh.TotalDue) AS Revenue
+    FROM Sales.SalesOrderHeader AS soh
+    LEFT JOIN Sales.SalesOrderDetail AS sod 
+	ON soh.SalesOrderID = sod.SalesOrderID
+    GROUP BY YEAR(soh.OrderDate), MONTH(soh.OrderDate)
+    ORDER BY Yr DESC, Mth DESC;
+    ```
+
+4. Product Sold by Season
+   ``` sql
+   SELECT
+	pc.Name AS category,
+	ps.Name AS subcategory,
+	DATENAME(QUARTER, soh.OrderDate) AS quarter,
+	SUM(sod.OrderQty) AS units_sold,
+	SUM(sod.LineTotal) AS salesamount
+   FROM Sales.SalesOrderDetail AS sod
+   LEFT JOIN Sales.SalesOrderHeader AS soh
+   ON sod.SalesOrderID = soh.SalesOrderID
+	LEFT JOIN Production.Product AS pp
+	ON sod.ProductID = pp.ProductID
+		LEFT JOIN Production.ProductSubcategory ps
+		ON pp.ProductSubcategoryID = ps.ProductSubcategoryID
+			LEFT JOIN Production.ProductCategory AS pc
+			ON ps.ProductCategoryID = pc.ProductCategoryID
+   GROUP BY pc.Name, DATENAME(QUARTER, soh.OrderDate), pp.Name, ps.Name
+   ORDER BY category ASC, quarter ASC;
+   ```
+
+
+5. Does delay in shipping vary with month?
+   ``` sql
+   SELECT
+	MONTH(soh.OrderDate) AS month,
+	DATENAME(QUARTER, soh.OrderDate) AS Qtr,
+	AVG(DATEDIFF(DAY, soh.OrderDate, soh.ShipDate)) AS avgshipdelay,
+	AVG(soh.Freight) AS avgfrieghtcost
+   FROM Sales.SalesOrderHeader AS soh
+   GROUP BY MONTH(soh.OrderDate), DATENAME(QUARTER, soh.OrderDate)
+   ORDER BY Qtr, month;
+   ```
+
+6. Sales by Region and Channel
+   ``` sql
+   SELECT
+	st.Name AS territory,
+	st.[Group] AS territorygroup,
+	DATENAME(QUARTER, soh.OrderDate) AS Qtr,
+	SUM(sod.OrderQty) AS unitsold,
+	SUM(soh.TotalDue) AS revenue,
+	COUNT(CASE WHEN soh.OnlineOrderFlag = 0 THEN 0 END) AS saleperson_channel,
+	COUNT(CASE WHEN soh.OnlineOrderFlag = 1 THEN 1 END) AS online_order_channel
+   FROM Sales.SalesOrderDetail AS sod
+   LEFT JOIN Sales.SalesOrderHeader AS soh
+	ON sod.SalesOrderID = soh.SalesOrderID
+	LEFT JOIN Sales.SalesTerritory AS st
+	ON soh.TerritoryID = st.TerritoryID
+   GROUP BY st.Name, st.[Group], DATENAME(QUARTER, soh.OrderDate)
+   ORDER BY territory, Qtr, revenue;
+   ```
+
+7. Sales Performance amongst regions
+   ``` sql
+   SELECT
+	st.Name AS Region,
+	st.[Group] AS Regiongroup,
+	DATENAME(QUARTER, soh.OrderDate) AS Qtr,
+	SUM(soh.TotalDue) AS revenue
+   FROM Sales.SalesOrderHeader AS soh
+	LEFT JOIN Sales.SalesTerritory AS st
+	ON soh.TerritoryID = st.TerritoryID
+   GROUP BY st.Name, st.[Group], DATENAME(QUARTER, soh.OrderDate)
+   ORDER BY revenue DESC;
+   ```
