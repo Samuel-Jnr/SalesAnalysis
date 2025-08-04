@@ -35,13 +35,40 @@ SQL – SELECT, WHERE, UNION ALL, DATENAME, CTEs, HAVING
    ORDER BY TotalRevenue DESC
    OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY;
    ```
-   The top selling products are the touring-1000 and the mountain-100, mountain-200 and Road-350-W, specifically the yellow, black, blue and silver colours.
+
+Result:
+
+
+| ProductID |	Name	                | 	ProductNumber	 | ProductLine	  |  OrderQty      |	UnitPrice   |   TotalRevenue |
+|:---------:|:-------------------------:|:----------------------:|:--------------:|:--------------:|:--------------:|:--------------:|
+| 954	    |	Touring-1000 Yellow, 46	| BK-T79Y-46		 | 	T 	  | 	26	   | 	1192.035    |	27893.619    |
+| 772	    |   Mountain-100 Silver, 42	|  BK-M82S-42		 |	M 	  |	14	   |	1971.9942   | 	27055.7602   |
+|   969	    |	Touring-1000 Blue, 60	|	BK-T79U-60	 |	T 	  |	21	   |	1311.2385   |	26159.2086   |
+|   775	    |	Mountain-100 Black, 38 	|	BK-M82B-38	 |	M 	  |	13	   |	1957.4942   |	24938.4759   |
+|   966	    |	Touring-1000 Blue, 46	|	BK-T79U-46	 |	T 	  |	19	   |	1311.2385   |	23667.8554   |
+|   773	    |	Mountain-100 Silver, 44	|	BK-M82S-44	 |	M 	  |	12	   |	1971.9942   |	23190.6516   |
+|   776	    |	Mountain-100 Black, 42	|	BK-M82B-42	 |	M 	  |	12	   |	1957.4942   |	23020.1316   |
+|   775	    |	Mountain-100 Black, 38	|	BK-M82B-38	 |	M 	  |	12	   |	1957.4942   |	23020.1316   |
+|  777	    |	Mountain-100 Black, 44	|	BK-M82B-44	 |	M 	  |	12	   |	1957.4942   |	23020.1316   |
+|  976	    |	Road-350-W Yellow, 48	|	BK-R79Y-48	 |	R 	  |	30	   |	850.495	    | 	22963.365    |
+|  966	    |	Touring-1000 Blue, 46	|	BK-T79U-46	 |	T 	  |	18	   |	1311.2385   |	22422.1788   |
+|  969	    |	Touring-1000 Blue, 60	|	BK-T79U-60	 |	T 	  |	18	   |	1311.2385   |	22422.1788   |
+|  957	    |	Touring-1000 Yellow, 60	|	BK-T79Y-60	 |	T 	  |	17	   |	1311.2385   |	21176.5022   |
+|  775	    |	Mountain-100 Black, 38	|	BK-M82B-38	 |	M 	  |	11	   |	1957.4942   |	21101.7873   |
+|  777	    |	Mountain-100 Black, 44	|	BK-M82B-44	 |	M 	  |	11	   |	1957.4942   |	21101.7873   |
+|  780	    |	Mountain-200 Silver, 42	|	BK-M68S-42	 |	M 	  |	17	   |	1275.9945   |	20607.3116   |
+|  773	    |	Mountain-100 Silver, 44	|	BK-M82S-44	 |	M 	  |	10	   |	2039.994    |	20399.94     |
+|  771	    |	Mountain-100 Silver, 38	|	BK-M82S-38	 |	M 	  |	10	   |	2039.994    |	20399.94     |
+|  774	    |	Mountain-100 Silver, 48	|	BK-M82S-48	 |	M 	  |	10	   |	2039.994    |	20399.94     |
+|  782	    |	Mountain-200 Black, 38	|	BK-M68B-38	 |	M 	  |	17	   |	1262.2445   |	20385.2491   |
+    
+The top selling products are the touring-1000 and the mountain-100, mountain-200 and Road-350-W, specifically the yellow, black, blue and silver colours.
 
    RECOMMENDATION
    
    Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
 
-2. Customers who have made more than two purchases
+3. Customers who have made more than two purchases
    ``` sql
    WITH AllCustomers AS (
     SELECT 
@@ -72,6 +99,29 @@ SQL – SELECT, WHERE, UNION ALL, DATENAME, CTEs, HAVING
    HAVING COUNT(DISTINCT soh.SalesOrderID) > 1
    ORDER BY TotalOrders DESC;
    ```
+
+Result (section of the query result)
+
+|     CustomerID	|	CustomerName	|	TotalOrders	|	FirstPurchase		|	LastPurchase		|
+|:---------------------:|:---------------------:|:---------------------:|:-----------------------------:|:-----------------------------:|
+|	11091		|   Jennifer  Taylor	|	28		|	2014-06-10 00:00:00.000	|	2013-07-01 00:00:00.000	|
+|	11176		| Morgan C Miller	|	28		|	2014-06-29 00:00:00.000	|	2013-07-05 00:00:00.000	|
+|	11331		|Grace J Lee		|	27		|	2014-06-26 00:00:00.000	|	2013-07-10 00:00:00.000	|
+|	11330		|Grace R Lewis		|27			|2014-06-24 00:00:00.000	|	2013-07-15 00:00:00.000|
+|11223			|Isabella B Moore	|27			|2014-06-08 00:00:00.000	|	2013-07-01 00:00:00.000|
+|	11711		|Brianna  Jones		|27			|2014-06-28 00:00:00.000	|	2013-07-10 00:00:00.000|
+|	11300		|Marshall M Shen	|27			|2014-06-02 00:00:00.000	|2013-07-03 00:00:00.000|
+|11185	|Morgan P Jackson	|27	|2014-06-28 00:00:00.000	|2013-07-24 00:00:00.000|
+|11262	|Natalie C Wilson	|27	|2014-06-24 00:00:00.000	|2013-07-30 00:00:00.000|
+|11200	|Morgan  Lewis		|27	|2014-06-22 00:00:00.000	|2013-07-10 00:00:00.000|
+|11276	|Natalie M Martin	|27	|2014-06-24 00:00:00.000	|2013-07-01 00:00:00.000|
+|11287	|Ruben J Carlson	|27	|2014-06-30 00:00:00.000	|2013-07-01 00:00:00.000|
+|11277	|Ruben B Vazquez	|27	|2014-06-18 00:00:00.000	|2013-07-05 00:00:00.000|
+|11566	|Barbara H Zhu		|25	|2014-06-09 00:00:00.000	|2013-06-30 00:00:00.000|
+|11215	|Isabella L Brown	|17	|2014-05-17 00:00:00.000	|2013-07-18 00:00:00.000|
+|11212	|Marshall K Cai		|17	|2014-06-19 00:00:00.000	|2013-07-02 00:00:00.000|
+|11078	|Joe  Sanz		|17	|2014-06-30 00:00:00.000	|2013-07-18 00:00:00.000|
+
 
    RECOMENDATION
 
