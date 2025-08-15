@@ -64,9 +64,7 @@ Result:
     
 The top selling products are the touring-1000 and the mountain-100, mountain-200 and Road-350-W, specifically the yellow, black, blue and silver colours.
 
-   RECOMMENDATION
-   
-   Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
+  
 
 3. Customers who have made more than two purchases
    ``` sql
@@ -123,9 +121,7 @@ Result (section of the query result)
 |11078	|Joe  Sanz		|17	|2014-06-30 00:00:00.000	|2013-07-18 00:00:00.000|
 
 
-   RECOMENDATION
 
-   xxx
 
 3. Sales Volume and Revenue Pattern
     ``` sql
@@ -249,3 +245,8 @@ Output
    GROUP BY st.Name, st.[Group], DATENAME(QUARTER, soh.OrderDate)
    ORDER BY revenue DESC;
    ```
+
+
+ RECOMMENDATION
+   
+   Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
