@@ -136,6 +136,7 @@ Result (section of the query result)
     GROUP BY YEAR(soh.OrderDate), MONTH(soh.OrderDate)
     ORDER BY Yr DESC, Mth DESC;
     ```
+
 Output
 |	Yr	  |		Mth		|	TotalOrder	|	Revenue	|
 |:-------:|:-----------:|:-------------:|:---------:|
@@ -154,29 +155,11 @@ Output
 |2013	|6	|16611	|196255098.0868
 |2013	|5	|10260	|128274772.2174
 |2013	|4	|6449	|81885074.041
-|2013	|3	|8250	|118291182.5314
-|2013	|2	|5651	|81383812.9624
-|2013	|1	|4154	|45713959.7896
-|2012	|12	|5405	|65988869.7559
-|2012	|11	|3606	|39776216.1761
-|2012	|10	|6549	|89019867.4342
-|2012	|9	|8294	|122305536.5225
-|2012	|8	|5567	|75586410.9459
-|2012	|7	|9142	|141423746.4036
-|2012	|6	|11295	|168745950.1071
-|2012	|5	|7723	|119232307.9456
-|2012	|4	|2405	|26061041.634
-|2012	|3	|3184	|49273556.4344
-|2012	|2	|1442	|17925512.9441
-|2012	|1	|3967	|57438324.9253
-|2011	|12	|1040	|10980308.2185
-|2011	|11	|230	|815313.0152
-|2011	|10	|5382	|85739874.8143
-|2011	|9	|157	|554791.6082
-|2011	|8	|2904	|38009959.609
-|2011	|7	|2209	|26081421.0149
-|2011	|6	|141	|507096.469
-|2011	|5	|825	|8094970.2066
+
+
+
+
+
 
 
 4. Product Sold by Season
@@ -201,6 +184,27 @@ Output
    ```
 
 
+Results
+|	category	|	subcategory	|	quarter		|	units_sold	|	salesamount	|
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+|Accessories	|	Bike Racks	|	1			| 680			| 51668.712000	|
+| Accessories| Cleaners| 1| 688| 3873.199455| 
+| Accessories| Fenders| 1| 505| 11099.9| 
+| Accessories| Bike Stands| 1| 66| 10494| 
+| Accessories| Tires and Tubes| 1| 338| 11830| 
+| Accessories| Tires and Tubes| 1| 288| 8637.12| 
+| Accessories| Tires and Tubes| 1| 771| 3847.29| 
+| Accessories| Locks| 1| 221| 3315| 
+| Accessories| Hydration Packs| 1| 573| 22790.033604| 
+| Accessories| Bottles and Cages| 1| 498| 4477.02| 
+| Accessories| Helmets| 1| 1579| 39944.565819| 
+| Accessories| Tires and Tubes| 1| 208| 6780.8| 
+| Accessories| Tires and Tubes| 1| 958| 2072.908| 
+
+
+
+
+
 5. Does delay in shipping vary with month?
    ``` sql
    SELECT
@@ -212,6 +216,26 @@ Output
    GROUP BY MONTH(soh.OrderDate), DATENAME(QUARTER, soh.OrderDate)
    ORDER BY Qtr, month;
    ```
+
+Results
+|Year  |  Month  |  Qtr  |  Category  |  TotalOrder  |  TotalDiscount  |  AvgDiscount  |  Revenue |
+|:----:|:-------:|:-----:|:----------:|:------------:|:---------------:|:-------------:|:--------:|
+|2011 |  5  |  2  |  Accessories  |  84  |  0  |  0  |  820895.2328|
+|2011 |  5  |  2  |  Clothing  |  167  |  0  |  0  |  1193380.2359|
+|2011 |  5  |  2  |  Components  |  114  |  0  |  0  |  1718251.6587|
+|2011 |  5  |  2  |  Bikes  |  460  |  0  |  0  |  4362443.0792|
+|2011 |  6  |  2  |  Bikes  |  141  |  0  |  0  |  507096.469|
+|2011 |  7  |  3  |  Accessories  |  178  |  0  |  0  |  2443966.2598|
+|2011 |  7  |  3  |  Clothing  |  449  |  4.13  |  0.0016  |  4391000.6195|
+|2011 |  7  |  3  |  Components  |  299  |  0  |  0  |  5720115.2062|
+|2011 |  7  |  3  |  Bikes  |  1283  |  1.04  |  0.0001  |  13526338.9294|
+|2011 |  8  |  3  |  Accessories  |  257  |  0  |  0  |  3721437.1185|
+|2011 |  8  |  3  |  Clothing  |  566  |  3.85  |  0.0012  |  5717554.4846|
+|2011 |  8  |  3  |  Components  |  400  |  0  |  0  |  8718478.2682|
+|2011 |  8  |  3  |  Bikes  |  1681  |  0.46  |  0  |  19852489.7377|
+
+
+
 
 6. Sales by Region and Channel
    ``` sql
@@ -232,21 +256,65 @@ Output
    ORDER BY territory, Qtr, revenue;
    ```
 
-7. Sales Performance amongst regions
+Results
+| territory  |  territorygroup  |  Qtr  |  unitsold  |  revenue  |  saleperson_channel  |  online_order_channel |
+|:----------:|:----------------:|:-----:|:----------:|:---------:|:--------------------:|:---------------------:|
+| Australia  |  Pacific  |  1  |  4495  |  14603238.8772  |  339  |  3662|
+| Australia  |  Pacific  |  2  |  4903  |  18697546.7105  |  476  |  3471|
+| Australia  |  Pacific  |  3  |  4492  |  21183105.4584  |  507  |  2923|
+| Australia  |  Pacific  |  4  |  4403  |  16090033.1134  |  391  |  3289|
+| Canada  |  North America  |  1  |  11440  |  119769557.5589  |  2819  |  1891|
+| Canada  |  North America  |  2  |  14335  |  162989322.8036  |  3117  |  1932|
+| Canada  |  North America  |  3  |  13350  |  143854014.2112  |  3080  |  1736|
+| Canada  |  North America  |  4  |  10256  |  100356568.6689  |  2428  |  2061|
+
+
+
+
+
+7. Sales Performance amongst regions (Top 3)
+   ``` sql
+   SELECT TOP 3
+		st.Name AS Region,
+		st.[Group] AS Regiongroup,
+		SUM(soh.TotalDue) AS revenue
+	FROM Sales.SalesOrderHeader AS soh
+		LEFT JOIN Sales.SalesTerritory AS st
+			ON soh.TerritoryID = st.TerritoryID
+	GROUP BY st.Name, st.[Group]
+	ORDER BY revenue DESC;
+   ```
+Results
+|	Region	|	Regiongroup	|	revenue	|
+|:---------:|:-------------:|:---------:|
+| Southwest	| North America | 27150594.5893 |
+| Canada	| North America	| 18398929.188	|
+| Northwest	| North America	| 18061660.371	|
+
+
+
+
+8. Underforming Regions by Sales Performance
    ``` sql
    SELECT
-	st.Name AS Region,
-	st.[Group] AS Regiongroup,
-	DATENAME(QUARTER, soh.OrderDate) AS Qtr,
-	SUM(soh.TotalDue) AS revenue
-   FROM Sales.SalesOrderHeader AS soh
-	LEFT JOIN Sales.SalesTerritory AS st
-	ON soh.TerritoryID = st.TerritoryID
-   GROUP BY st.Name, st.[Group], DATENAME(QUARTER, soh.OrderDate)
-   ORDER BY revenue DESC;
+		st.Name AS Region,
+		st.[Group] AS Regiongroup,
+		SUM(soh.TotalDue) AS revenue
+	FROM Sales.SalesOrderHeader AS soh
+		LEFT JOIN Sales.SalesTerritory AS st
+			ON soh.TerritoryID = st.TerritoryID
+	GROUP BY st.Name, st.[Group]
+	ORDER BY revenue ASC
+	OFFSET 0 ROWS FETCH FIRST 3 ROWS ONLY;
    ```
 
+Results
+|	Region	|	Regiongroup	|	revenue	|
+|:---------:|:-------------:|:---------:|
+| Germany	|	Europe	|	5479819.5755 |
+| Northeast	| North America |	7820209.6285 |
+|	France	|	Europe	|	8119749.346 |
 
- RECOMMENDATION
+## RECOMMENDATION
    
-   Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
+  1. Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
