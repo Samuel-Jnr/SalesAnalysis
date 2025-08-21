@@ -317,4 +317,6 @@ Results
 
 ## RECOMMENDATION
    
-  1. Sales and production department should carry out user experience research/survey on this  products so, we can optimize the product for better experience which in turn will increase sales of this products.
+  1. Sales and production department should carry out user experience research/survey on the products so, we can optimize the product for better experience which in turn will increase sales of this products.
+  2. Utilize a mix of promotional offers, loyalty program, improvement in customer service, coupled with both strong online and offline marketing efforts
+
